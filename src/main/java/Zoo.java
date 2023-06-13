@@ -18,17 +18,17 @@ public class Zoo {
         this.transactions = transactions;
     }
 
-    public void addAnimal(Animal animal) throws AnimalNotFoundException {
+    public void addAnimal(Animal animal) throws AnimalIsNullException {
         if (Objects.isNull(animal)) {
-            throw new AnimalNotFoundException("Animal not found");
+            throw new AnimalIsNullException("Animal not found");
         } else {
             animals.add(animal);
         }
     }
 
-    public void registerStaff(Staff staff) throws StaffNotFoundException {
+    public void registerStaff(Staff staff) throws StaffIsNullException {
         if (Objects.isNull(staff)) {
-            throw new StaffNotFoundException("Staff not found");
+            throw new StaffIsNullException("Staff not found");
         } else {
             this.staff.add(staff);
         }
