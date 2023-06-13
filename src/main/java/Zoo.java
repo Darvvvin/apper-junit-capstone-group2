@@ -106,6 +106,10 @@ public class Zoo {
         return new Ticket(price, schedule);
     }
 
+    public String getTicketId(Ticket ticket){
+        return ticket.getId();
+    }
+
 
     public List<Transaction> getTransactionsByDate(String date) {
         List<Transaction> filteredTransactions = new ArrayList<>();
