@@ -4,9 +4,9 @@ import java.util.UUID;
 public class Ticket {
     private String id;
     private double price;
-    private Date schedule;
+    private String schedule;
 
-    public Ticket(double price, Date schedule) {
+    public Ticket(double price, String schedule) {
         this.id = UUID.randomUUID().toString();
         this.price = price;
         this.schedule = schedule;
@@ -24,11 +24,11 @@ public class Ticket {
         this.price = price;
     }
 
-    public Date getSchedule() {
+    public String getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Date schedule) {
+    public void setSchedule(String schedule) {
         this.schedule = schedule;
     }
 }

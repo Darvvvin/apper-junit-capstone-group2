@@ -94,7 +94,7 @@ public class Zoo {
         throw new VisitorNotFoundException (name + "is missing from the visitor list");
     }
 
-    public void buyTicketVisitor(double price, Date schedule, Visitor visitor, int numberOfTickets) {
+    public void buyTicketVisitor(double price, String schedule, Visitor visitor, int numberOfTickets) {
         List<Ticket> customerTickets = new ArrayList<>();
         for(int i = 0; i < numberOfTickets; i++)
             customerTickets.add(createTicket(price, schedule));
@@ -102,15 +102,15 @@ public class Zoo {
         transactions.add(new Transaction(schedule, visitor, customerTickets));
     }
 
-    public Ticket createTicket(double price, Date schedule) {
+    public Ticket createTicket(double price, String schedule) {
         return new Ticket(price, schedule);
     }
 
 
-    public List<Transaction> getTransactionsByDate(Date date) {
+    public List<Transaction> getTransactionsByDate(String date) {
         List<Transaction> filteredTransactions = new ArrayList<>();
         for (Transaction transaction : transactions) {
-            if (transaction.getDate() == date) {
+            if (transaction.getDate().equals(date)) {
                 filteredTransactions.add(transaction);
             }
         }
