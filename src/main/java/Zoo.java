@@ -1,6 +1,8 @@
 import java.util.UUID;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Zoo {
     private List<Animal> animals;
@@ -17,12 +19,20 @@ public class Zoo {
         this.transactions = transactions;
     }
 
-    public void registerAnimal(Animal animal) {
-
+    public void addAnimal(Animal animal) throws AnimalIsNullException {
+        if (Objects.isNull(animal)) {
+            throw new AnimalIsNullException("Animal not found");
+        } else {
+            animals.add(animal);
+        }
     }
 
-    public void registerStaff(Staff staff) {
-
+    public void registerStaff(Staff staff) throws StaffIsNullException {
+        if (Objects.isNull(staff)) {
+            throw new StaffIsNullException("Staff not found");
+        } else {
+            this.staff.add(staff);
+        }
     }
 
     // Visitor Methods

@@ -1,13 +1,16 @@
 import java.util.Date;
+import java.util.UUID;
 
 public class Transaction {
+    private String id;
     private Date date;
-    private String userId;
+    private Visitor customer;
     private int numOfTickets;
 
-    public Transaction(Date date, String userId, int numOfTickets) {
+    public Transaction(Date date, Visitor customer, int numOfTickets) {
+        this.id = UUID.randomUUID().toString();
         this.date = date;
-        this.userId = userId;
+        this.customer = customer;
         this.numOfTickets = numOfTickets;
     }
 
@@ -19,19 +22,19 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
     public int getNumOfTickets() {
         return numOfTickets;
     }
 
     public void setNumOfTickets(int numOfTickets) {
         this.numOfTickets = numOfTickets;
+    }
+
+    public Visitor getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Visitor customer) {
+        this.customer = customer;
     }
 }
