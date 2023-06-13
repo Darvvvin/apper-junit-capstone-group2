@@ -59,6 +59,12 @@ public class Zoo {
 
 
     public List<Transaction> getTransactionsByDate(Date date) {
-        return null;
+        List<Transaction> filteredTransactions = new ArrayList<>();
+        for(int i = 0; i < transactions.size(); i++){
+            if(transactions.get(i).getDate() == date) {
+                filteredTransactions.add(transactions.get(i));
+            }
+        }
+        return filteredTransactions;
     }
 }
