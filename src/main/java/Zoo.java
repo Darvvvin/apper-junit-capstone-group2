@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class Zoo {
     private List<Animal> animals;
@@ -24,8 +26,12 @@ public class Zoo {
         }
     }
 
-    public void registerStaff(Staff staff) {
-
+    public void registerStaff(Staff staff) throws StaffNotFoundException {
+        if (Objects.isNull(staff)) {
+            throw new StaffNotFoundException("Staff not found");
+        } else {
+            this.staff.add(staff);
+        }
     }
 
     public void registerVisitor(Visitor visitor) {
