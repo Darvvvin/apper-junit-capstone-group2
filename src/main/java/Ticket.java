@@ -3,12 +3,10 @@ import java.util.Date;
 public class Ticket {
     private double price;
     private Date schedule;
-    private Visitor customer;
 
-    public Ticket(double price, Date schedule, Visitor customer) {
+    public Ticket(double price, Date schedule) {
         this.price = price;
         this.schedule = schedule;
-        this.customer = customer;
     }
 
     public double getPrice() {
@@ -25,13 +23,5 @@ public class Ticket {
 
     public void setSchedule(Date schedule) {
         this.schedule = schedule;
-    }
-
-    public Visitor getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Visitor customer) {
-        this.customer = customer;
     }
 }
