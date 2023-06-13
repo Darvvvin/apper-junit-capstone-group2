@@ -21,17 +21,4 @@ public class Animal {
     public String getFood() {
         return food;
     }
-
-    // Setters
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setFood(String food) {
-        this.food = food;
-    }
 }
