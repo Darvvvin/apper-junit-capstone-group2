@@ -11,31 +11,73 @@ public class Zoo {
     private List<Ticket> tickets;
     private List<Transaction> transactions;
 
-    public Zoo(List<Animal> animals, List<Staff> staff, List<Visitor> visitors, List<Ticket> tickets, List<Transaction> transactions) {
-        this.animals = animals;
-        this.staff = staff;
-        this.visitors = visitors;
-        this.tickets = tickets;
-        this.transactions = transactions;
+    public Zoo() {
+        this.animals = new ArrayList<>();
+        this.staff = new ArrayList<>();
+        this.visitors = new ArrayList<>();
+        this.tickets = new ArrayList<>();
+        this.transactions = new ArrayList<>();
     }
 
-    public void addAnimal(Animal animal) throws AnimalIsNullException {
-        if (Objects.isNull(animal)) {
-            throw new AnimalIsNullException("Animal not found");
-        } else {
-            animals.add(animal);
-        }
+    public void addAnimal(Animal animal){
+        animals.add(animal);
     }
 
-    public void registerStaff(Staff staff) throws StaffIsNullException {
-        if (Objects.isNull(staff)) {
-            throw new StaffIsNullException("Staff not found");
-        } else {
-            this.staff.add(staff);
+    public Animal getAnimal(String name) throws AnimalNotFoundException {
+        for (Animal animal: animals) {
+            if (animal.getName().equals(name)) {
+                return animal;
+            }
         }
+        throw new AnimalNotFoundException(name + " is missing");
     }
+
+    public int getNumberOfAnimals() {
+        return animals.size();
+    }
+
+    public String registerStaff(Staff staff){
+        this.staff.add(staff);
+        return staff.getId();
+    }
+
+    public Staff getStaff(String id) throws StaffNotFoundException {
+        for (Staff staff: staff) {
+            if (staff.getId().equals(id)) {
+                return staff;
+            }
+        }
+        throw new StaffNotFoundException("Employee " + id + " is missing from employee directory");
+    }
+
+    public int getNumberOfStaff() {
+        return staff.size();
+    }
+
 
     // Visitor Methods
+    //derick
+    public void assignAnimalToStaff(Animal animal, Staff staff) throws AnimalNotFoundException, StaffNotFoundException {
+        // Check if the animal and staff exist
+        if (!animals.contains(animal)) {
+            throw new AnimalNotFoundException("Animal not found");
+        }
+        if (!staff.contains(staff)) {
+            throw new StaffNotFoundException("Staff not found");
+        }
+        // Assign animal to staff
+        staff.assignAnimal(animal);
+    }
+
+    public Animal retrieveAnimalFromStaff(String animalName, Staff staff) throws AnimalNotFoundException {
+        for (Animal animal: staff.getAssignedAnimals()) {
+            if (animal.getName().equals(animalName)) {
+                return animal;
+            }
+        }
+        throw new AnimalNotFoundException(animalName + " is missing");
+    }
+
     public void registerVisitor(String visitorName) {
         String id = UUID.randomUUID().toString();
         visitors.add(new Visitor(id, visitorName));
@@ -51,19 +93,6 @@ public class Zoo {
 
     public Ticket createTicket(double price, Date schedule) {
         return new Ticket(price, schedule);
-    }
-
-    //derick
-    public void assignAnimalToStaff(Animal animal, Staff staff) throws AnimalNotFoundException, StaffNotFoundException {
-        // Check if the animal and staff exist
-        if (!animals.contains(animal)) {
-            throw new AnimalNotFoundException("Animal not found");
-        }
-        if (!staff.contains(staff)) {
-            throw new StaffNotFoundException("Staff not found");
-        }
-        // Assign animal to staff
-        staff.assignAnimal(animal);
     }
 
 
