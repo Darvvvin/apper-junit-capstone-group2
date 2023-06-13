@@ -18,6 +18,7 @@ public class ZooTest {
     void addAnimal(){
         Animal newAnimal = new Animal("Simba", "Lion", "Meat");
         zoo.addAnimal(newAnimal);
+
         Assertions.assertAll("Animal is created",
                 () -> Assertions.assertEquals(1, zoo.getNumberOfAnimals()),
                 () -> Assertions.assertEquals("Simba", zoo.getAnimal("Simba").getName()),
@@ -31,6 +32,7 @@ public class ZooTest {
     void getAnimal_AnimalNotFound() {
         Animal newAnimal = new Animal("Simba", "Lion", "Meat");
         zoo.addAnimal(newAnimal);
+
         Assertions.assertThrows(AnimalNotFoundException.class,
                 () -> zoo.getAnimal("Scar")
         );
@@ -41,6 +43,7 @@ public class ZooTest {
     void registerStaff() {
         Staff employee = new Staff("Mark", "Veterinarian");
         String staffId = zoo.registerStaff(employee);
+
         Assertions.assertAll("Animal is created",
                 () -> Assertions.assertEquals(1, zoo.getNumberOfStaff()),
                 () -> Assertions.assertEquals("Mark", zoo.getStaff(staffId).getName()),
@@ -52,6 +55,7 @@ public class ZooTest {
     @DisplayName("Fail getting animal")
     void getStaff_StaffNotFound() {
         Staff employee = new Staff("Mark", "Veterinarian");
+
         zoo.registerStaff(employee);
         Assertions.assertThrows(StaffNotFoundException.class,
                 () -> zoo.getStaff("non-existing-id")
@@ -61,16 +65,19 @@ public class ZooTest {
     @Test
     void assignAnimalToStaff() throws AnimalNotFoundException, StaffNotFoundException {
         Staff employee = new Staff("Mark", "Veterinarian");
+
         String staffId = zoo.registerStaff(employee);
         Animal newAnimal = new Animal("Simba", "Lion", "Meat");
-        zoo.addAnimal(newAnimal);
 
+        zoo.addAnimal(newAnimal);
         zoo.assignAnimalToStaff(newAnimal, zoo.getStaff(staffId));
-        Assertions.assertEquals(newAnimal, zoo.retrieveAnimalFromStaff("Simba", zoo.getStaff(staffId));
+
+        Assertions.assertEquals(newAnimal, zoo.retrieveAnimalFromStaff("Simba", zoo.getStaff(staffId)));
     }
 
     @Test
     void registerVisitor() {
+
     }
 
     @Test

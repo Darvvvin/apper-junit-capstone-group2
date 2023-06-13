@@ -57,16 +57,18 @@ public class Zoo {
 
     // Visitor Methods
     //derick
-    public void assignAnimalToStaff(Animal animal, Staff staff) throws AnimalNotFoundException, StaffNotFoundException {
+    public void assignAnimalToStaff(Animal animal, Staff staffId) throws AnimalNotFoundException, StaffNotFoundException {
         // Check if the animal and staff exist
         if (!animals.contains(animal)) {
             throw new AnimalNotFoundException("Animal not found");
         }
-        if (!staff.contains(staff)) {
+
+        if (!staff.contains(staffId)) {
             throw new StaffNotFoundException("Staff not found");
         }
+
         // Assign animal to staff
-        staff.assignAnimal(animal);
+        staffId.assignAnimal(animal);
     }
 
     public Animal retrieveAnimalFromStaff(String animalName, Staff staff) throws AnimalNotFoundException {
@@ -78,9 +80,8 @@ public class Zoo {
         throw new AnimalNotFoundException(animalName + " is missing");
     }
 
-    public void registerVisitor(String visitorName) {
-        String id = UUID.randomUUID().toString();
-        visitors.add(new Visitor(id, visitorName));
+    public void registerVisitor(Visitor visitor) {
+        visitors.add(visitor);
     }
 
     public void buyTicketVisitor(double price, Date schedule, Visitor visitor, int numberOfTickets) {
@@ -98,9 +99,9 @@ public class Zoo {
 
     public List<Transaction> getTransactionsByDate(Date date) {
         List<Transaction> filteredTransactions = new ArrayList<>();
-        for(int i = 0; i < transactions.size(); i++){
-            if(transactions.get(i).getDate() == date) {
-                filteredTransactions.add(transactions.get(i));
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate() == date) {
+                filteredTransactions.add(transaction);
             }
         }
         return filteredTransactions;

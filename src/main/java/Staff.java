@@ -47,8 +47,4 @@ public class Staff {
     public void assignAnimal(Animal animal) { //derick
         assignedAnimals.add(animal);
     }
-
-    public boolean contains(Staff staff) { //derick
-        return assignedAnimals.contains(staff);
-    }
 }

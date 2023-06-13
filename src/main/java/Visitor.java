@@ -1,9 +1,11 @@
+import java.util.UUID;
+
 public class Visitor {
     private String id;
     private String name;
 
-    public Visitor(String id, String name) {
-        this.id = id;
+    public Visitor(String name) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
     }
 
