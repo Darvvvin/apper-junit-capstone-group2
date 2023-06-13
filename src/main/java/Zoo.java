@@ -42,14 +42,15 @@ public class Zoo {
     }
 
     public void buyTicketVisitor(double price, Date schedule, Visitor visitor, int numberOfTickets) {
-        transactions.add(new Transaction(schedule, visitor.getId(), numberOfTickets));
-
+        List<Ticket> customerTickets = new ArrayList<>();
         for(int i = 0; i < numberOfTickets; i++)
-            tickets.add(createTicket(price, schedule, visitor));
+            customerTickets.add(createTicket(price, schedule));
+
+        transactions.add(new Transaction(schedule, visitor, customerTickets));
     }
 
-    public Ticket createTicket(double price, Date schedule, Visitor visitor) {
-        return new Ticket(price, schedule, visitor);
+    public Ticket createTicket(double price, Date schedule) {
+        return new Ticket(price, schedule);
     }
 
     public void assignAnimalToStaff(Animal animal, Staff staff) {
