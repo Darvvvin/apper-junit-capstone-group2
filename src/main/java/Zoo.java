@@ -77,9 +77,21 @@ public class Zoo {
         }
     }
 
-    public void registerVisitor(String visitorName) {
-        String id = UUID.randomUUID().toString();
-        visitors.add(new Visitor(id, visitorName));
+    public void registerVisitor(Visitor visitor) {
+        visitors.add(visitor);
+    }
+
+    public int getNumberOfVisitors() {
+        return visitors.size();
+    }
+
+    public Visitor getVisitor(String name) throws VisitorNotFoundException {
+        for (Visitor visitor: visitors) {
+            if (visitor.getName().equals(name)) {
+                return visitor;
+            }
+        }
+        throw new VisitorNotFoundException (name + "is missing from the visitor list");
     }
 
     public void buyTicketVisitor(double price, Date schedule, Visitor visitor, int numberOfTickets) {
@@ -97,9 +109,9 @@ public class Zoo {
 
     public List<Transaction> getTransactionsByDate(Date date) {
         List<Transaction> filteredTransactions = new ArrayList<>();
-        for(int i = 0; i < transactions.size(); i++){
-            if(transactions.get(i).getDate() == date) {
-                filteredTransactions.add(transactions.get(i));
+        for (Transaction transaction : transactions) {
+            if (transaction.getDate() == date) {
+                filteredTransactions.add(transaction);
             }
         }
         return filteredTransactions;

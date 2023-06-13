@@ -114,7 +114,16 @@ public class ZooTest {
     }
 
     @Test
+    @DisplayName("Success registering visitors")
     void registerVisitor() {
+        Visitor visitor = new Visitor("Jacob");
+
+        zoo.registerVisitor(visitor);
+
+        Assertions.assertAll("Visitor is created",
+                () -> Assertions.assertEquals(1, zoo.getNumberOfVisitors()),
+                () -> Assertions.assertEquals("Jacob", zoo.getVisitor("Jacob").getName())
+        );
     }
 
     @Test
