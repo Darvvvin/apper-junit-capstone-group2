@@ -1,3 +1,4 @@
+import java.util.UUID;
 import java.util.Date;
 import java.util.List;
 
@@ -24,17 +25,27 @@ public class Zoo {
 
     }
 
-    public void registerVisitor(Visitor visitor) {
+    // Visitor Methods
+    public void registerVisitor(String visitorName) {
+        String id = UUID.randomUUID().toString();
+        visitors.add(new Visitor(id, visitorName));
+    }
 
+    public void buyTicketVisitor(double price, Date schedule, Visitor visitor, int numberOfTickets) {
+        transactions.add(new Transaction(schedule, visitor.getId(), numberOfTickets));
+
+        for(int i = 0; i < numberOfTickets; i++)
+            tickets.add(createTicket(price, schedule, visitor));
+    }
+
+    public Ticket createTicket(double price, Date schedule, Visitor visitor) {
+        return new Ticket(price, schedule, visitor);
     }
 
     public void assignAnimalToStaff(Animal animal, Staff staff) {
 
     }
 
-    public Ticket createTicket(double price, Date schedule, Visitor visitor) {
-        return null;
-    }
 
     public List<Transaction> getTransactionsByDate(Date date) {
         return null;
