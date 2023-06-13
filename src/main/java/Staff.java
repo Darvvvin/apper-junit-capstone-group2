@@ -31,24 +31,8 @@ public class Staff {
         return assignedAnimals;
     }
 
-    public Animal retrieveAnimalFromStaff(String animalName, Staff staff) throws AnimalNotFoundException {
-        for (Animal animal: staff.getAssignedAnimals()) {
-            if (animal.getName().equals(animalName)) {
-                return animal;
-            }
-        }
-        throw new AnimalNotFoundException(animalName + " is missing");
-    }
-
-    public void setAssignedAnimals(List<Animal> assignedAnimals) {
-        this.assignedAnimals = assignedAnimals;
-    }
-
     public void assignAnimal(Animal animal) { //derick
         assignedAnimals.add(animal);
     }
 
-    public boolean contains(Staff staff) { //derick
-        return assignedAnimals.contains(staff);
-    }
 }

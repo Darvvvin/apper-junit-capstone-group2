@@ -54,28 +54,27 @@ public class Zoo {
         return staff.size();
     }
 
-
-    // Visitor Methods
-    //derick
-    public void assignAnimalToStaff(Animal animal, Staff staff) throws AnimalNotFoundException, StaffNotFoundException {
-        // Check if the animal and staff exist
-        if (!animals.contains(animal)) {
-            throw new AnimalNotFoundException("Animal not found");
+    public void assignAnimalToStaff(Animal animal, Staff staff) throws AnimalNotFoundException, StaffNotFoundException, AnimalAlreadyAssignedException {
+        if (!Objects.isNull(getAnimal(animal.getName())) && !Objects.isNull(getStaff(staff.getId()))) {
+            Staff employee = this.staff.get(this.staff.indexOf(staff));
+            if (employee.getAssignedAnimals().contains(animal))
+                throw new AnimalAlreadyAssignedException(animal.getName() + "is already assigned to " + staff.getName());
+            employee.assignAnimal(animal);
         }
-        if (!staff.contains(staff)) {
-            throw new StaffNotFoundException("Staff not found");
-        }
-        // Assign animal to staff
-        staff.assignAnimal(animal);
     }
 
-    public Animal retrieveAnimalFromStaff(String animalName, Staff staff) throws AnimalNotFoundException {
-        for (Animal animal: staff.getAssignedAnimals()) {
-            if (animal.getName().equals(animalName)) {
-                return animal;
-            }
+    public Animal retrieveAnimalFromStaff(String animalName, Staff staff) throws NoAnimalsAssignedException, AnimalNotFoundException {
+        boolean isAnimalAssigned = staff.getAssignedAnimals().stream()
+                .anyMatch(animal -> animal.getName().equals(animalName));
+
+        if (isAnimalAssigned) {
+            return staff.getAssignedAnimals().stream()
+                    .filter(animal -> animal.getName().equals(animalName))
+                    .findFirst()
+                    .orElseThrow(() -> new AnimalNotFoundException(animalName + " is missing"));
+        } else {
+            throw new NoAnimalsAssignedException(animalName + " is not assigned");
         }
-        throw new AnimalNotFoundException(animalName + " is missing");
     }
 
     public void registerVisitor(String visitorName) {
