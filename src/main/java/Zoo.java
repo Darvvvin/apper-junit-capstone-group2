@@ -38,9 +38,17 @@ public class Zoo {
 
     }
 
-    public void assignAnimalToStaff(Animal animal, Staff staff) {
-
-    }
+    //derick
+    public void assignAnimalToStaff(Animal animal, Staff staff) throws AnimalNotFoundException, StaffNotFoundException {
+        // Check if the animal and staff exist
+        if (!animals.contains(animal)) {
+            throw new AnimalNotFoundException("Animal not found");
+        }
+        if (!staff.contains(staff)) {
+            throw new StaffNotFoundException("Staff not found");
+        }
+        // Assign animal to staff
+        staff.assignAnimal(animal);
 
     public Ticket createTicket(double price, Date schedule, Visitor visitor) {
         return null;
