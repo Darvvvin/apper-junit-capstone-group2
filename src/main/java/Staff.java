@@ -1,7 +1,7 @@
 import java.util.List;
 
 public class Staff {
-    private String name;
+    private static String name;
     private String role;
     private List<Animal> assignedAnimals;
 
@@ -11,7 +11,7 @@ public class Staff {
         this.assignedAnimals = assignedAnimals;
     }
 
-    public String getName() {
+    public static String getName() {
         return name;
     }
 
@@ -33,5 +33,13 @@ public class Staff {
 
     public void setAssignedAnimals(List<Animal> assignedAnimals) {
         this.assignedAnimals = assignedAnimals;
+    }
+
+    public void assignAnimal(Animal animal) { //derick
+        assignedAnimals.add(animal);
+    }
+
+    public boolean contains(Staff staff) { //derick
+        return assignedAnimals.contains(staff);
     }
 }
