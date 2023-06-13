@@ -55,25 +55,62 @@ public class ZooTest {
     @DisplayName("Fail getting animal")
     void getStaff_StaffNotFound() {
         Staff employee = new Staff("Mark", "Veterinarian");
-
         zoo.registerStaff(employee);
+
         Assertions.assertThrows(StaffNotFoundException.class,
                 () -> zoo.getStaff("non-existing-id")
         );
     }
 
     @Test
-    @DisplayName("Success assigning animal to staff")
-    void assignAnimalToStaff() throws AnimalNotFoundException, StaffNotFoundException {
+    @DisplayName("Successful assigning animal to staff and retrieving animal")
+    void assignAnimalToStaff() throws AnimalNotFoundException, StaffNotFoundException, AnimalAlreadyAssignedException, NoAnimalsAssignedException {
         Staff employee = new Staff("Mark", "Veterinarian");
-
         String staffId = zoo.registerStaff(employee);
+
         Animal newAnimal = new Animal("Simba", "Lion", "Meat");
+        zoo.addAnimal(newAnimal);
+
+        zoo.assignAnimalToStaff(newAnimal, zoo.getStaff(staffId));
+        Assertions.assertEquals(newAnimal, zoo.retrieveAnimalFromStaff("Simba", zoo.getStaff(staffId)));
+    }
+    @Test
+    @DisplayName("Fail getting Animal")
+    void assignAnimalToStaff_AnimalNotFound() {
+        Staff employee = new Staff("Mark", "Veterinarian");
+        String staffId = zoo.registerStaff(employee);
+
+        Animal newAnimal = new Animal("Simba", "Lion", "Meat");
+        Animal notIncludedAnimal = new Animal("Scar", "Lion", "Meat");
 
         zoo.addAnimal(newAnimal);
+
+        Assertions.assertThrows(NoAnimalsAssignedException.class, () -> zoo.retrieveAnimalFromStaff(notIncludedAnimal.getName(), zoo.getStaff(staffId)));
+    }
+    @Test
+    @DisplayName("Fail getting Staff")
+    void assignAnimalToStaff_StaffNotFound() {
+        Staff employee = new Staff("Mark", "Veterinarian");
+        zoo.registerStaff(employee);
+
+        Animal newAnimal = new Animal("Simba", "Lion", "Meat");
+        zoo.addAnimal(newAnimal);
+
+        Assertions.assertThrows(StaffNotFoundException.class, () -> zoo.assignAnimalToStaff(newAnimal, zoo.getStaff("non-existing-staff")));
+    }
+
+    @Test
+    @DisplayName("Animal is already assigned to Staff")
+    void assignAnimalToStaff_AlreadyAssigned() throws StaffNotFoundException, AnimalNotFoundException, AnimalAlreadyAssignedException {
+        Staff employee = new Staff("Mark", "Veterinarian");
+        String staffId = zoo.registerStaff(employee);
+
+        Animal newAnimal = new Animal("Simba", "Lion", "Meat");
+        zoo.addAnimal(newAnimal);
+
         zoo.assignAnimalToStaff(newAnimal, zoo.getStaff(staffId));
 
-        Assertions.assertEquals(newAnimal, zoo.retrieveAnimalFromStaff("Simba", zoo.getStaff(staffId)));
+        Assertions.assertThrows(AnimalAlreadyAssignedException.class, () -> zoo.assignAnimalToStaff(newAnimal, zoo.getStaff(staffId)));
     }
 
     @Test

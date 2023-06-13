@@ -4,22 +4,22 @@ import java.util.UUID;
 
 public class Transaction {
     private String id;
-    private Date date;
+    private String date;
     private Visitor customer;
     private List<Ticket> tickets;
 
-    public Transaction(Date date, Visitor customer, List tickets) {
+    public Transaction(String date, Visitor customer, List tickets) {
         this.id = UUID.randomUUID().toString();
         this.date = date;
         this.customer = customer;
         this.tickets = tickets;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
