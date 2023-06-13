@@ -114,7 +114,7 @@ public class ZooTest {
     }
 
     @Test
-    @DisplayName("Success registering visitors")
+    @DisplayName("Success registering and getting visitors")
     void registerVisitor() {
         Visitor visitor = new Visitor("Jacob");
 
@@ -124,6 +124,14 @@ public class ZooTest {
                 () -> Assertions.assertEquals(1, zoo.getNumberOfVisitors()),
                 () -> Assertions.assertEquals("Jacob", zoo.getVisitor("Jacob").getName())
         );
+    }
+    @Test
+    @DisplayName("Fail getting visitors")
+    void getVisitor_VisitorNotFound() {
+        Visitor visitor = new Visitor("Jacob");
+        zoo.registerVisitor(visitor);
+
+        Assertions.assertThrows(VisitorNotFoundException.class, () -> zoo.getVisitor("Mark"));
     }
 
     @Test
