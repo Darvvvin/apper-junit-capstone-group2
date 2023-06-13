@@ -145,12 +145,17 @@ public class ZooTest {
     void createTicket() {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Ticket newTicket = new Ticket(100.0, dateFormat.format(date));
 
-        String ticketID = newTicket.getId();
+        double price = 100.0;
+
+        Ticket newTicket = zoo.createTicket(price, dateFormat.format(date));
+
         Assertions.assertAll("Ticket is created",
                 () -> Assertions.assertEquals(100.0, newTicket.getPrice()),
-                () -> Assertions.assertEquals(ticketID, zoo.getTicketId(newTicket))
+                () -> Assertions.assertEquals(dateFormat.format(date), newTicket.getSchedule()),
+                () -> Assertions.assertNotNull(newTicket),
+                () -> Assertions.assertNotNull(newTicket.getId()),
+                () -> Assertions.assertFalse(newTicket.getId().isEmpty())
         );
     }
 
