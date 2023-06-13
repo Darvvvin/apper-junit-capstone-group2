@@ -10,4 +10,28 @@ public class Transaction {
         this.userId = userId;
         this.numOfTickets = numOfTickets;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public int getNumOfTickets() {
+        return numOfTickets;
+    }
+
+    public void setNumOfTickets(int numOfTickets) {
+        this.numOfTickets = numOfTickets;
+    }
 }
