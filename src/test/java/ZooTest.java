@@ -6,4 +6,13 @@ public class ZooTest {
     void successTest() {
         
     }
+    @Test
+    void testInvalidAssignAnimalToStaff() {
+
+    }
+
+    @Test
+    void testValidAssignAnimalToStaff() {
+
+    }
 }

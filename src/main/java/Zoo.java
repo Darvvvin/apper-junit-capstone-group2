@@ -49,6 +49,7 @@ public class Zoo {
         }
         // Assign animal to staff
         staff.assignAnimal(animal);
+    }
 
     public Ticket createTicket(double price, Date schedule, Visitor visitor) {
         return null;
