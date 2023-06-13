@@ -16,8 +16,12 @@ public class Zoo {
         this.transactions = transactions;
     }
 
-    public void registerAnimal(Animal animal) {
-
+    public void addAnimal(Animal animal) throws AnimalNotFoundException {
+        if (Objects.isNull(animal)) {
+            throw new AnimalNotFoundException("Animal not found");
+        } else {
+            animals.add(animal);
+        }
     }
 
     public void registerStaff(Staff staff) {
