@@ -1,5 +1,8 @@
 import org.junit.jupiter.api.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class ZooTest {
     private Zoo zoo;
 
@@ -140,6 +143,15 @@ public class ZooTest {
 
     @Test
     void createTicket() {
+        Date date = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        Ticket newTicket = new Ticket(100.0, dateFormat.format(date));
+
+        String ticketID = newTicket.getId();
+        Assertions.assertAll("Ticket is created",
+                () -> Assertions.assertEquals(100.0, newTicket.getPrice()),
+                () -> Assertions.assertEquals(ticketID, zoo.getTicketId(newTicket))
+        );
     }
 
     @Test
