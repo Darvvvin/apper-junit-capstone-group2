@@ -1,17 +1,18 @@
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Transaction {
     private String id;
     private Date date;
     private Visitor customer;
-    private int numOfTickets;
+    private List<Ticket> tickets;
 
-    public Transaction(Date date, Visitor customer, int numOfTickets) {
+    public Transaction(Date date, Visitor customer, List tickets) {
         this.id = UUID.randomUUID().toString();
         this.date = date;
         this.customer = customer;
-        this.numOfTickets = numOfTickets;
+        this.tickets = tickets;
     }
 
     public Date getDate() {
@@ -20,14 +21,6 @@ public class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public int getNumOfTickets() {
-        return numOfTickets;
-    }
-
-    public void setNumOfTickets(int numOfTickets) {
-        this.numOfTickets = numOfTickets;
     }
 
     public Visitor getCustomer() {
