@@ -56,7 +56,6 @@ public class Zoo {
 
 
     // Visitor Methods
-    //derick
     public void assignAnimalToStaff(Animal animal, Staff staffId) throws AnimalNotFoundException, StaffNotFoundException {
         // Check if the animal and staff exist
         if (!animals.contains(animal)) {
@@ -82,6 +81,19 @@ public class Zoo {
 
     public void registerVisitor(Visitor visitor) {
         visitors.add(visitor);
+    }
+
+    public int getNumberOfVisitors() {
+        return visitors.size();
+    }
+
+    public Visitor getVisitor(String name) throws VisitorNotFoundException {
+        for (Visitor visitor: visitors) {
+            if (visitor.getName().equals(name)) {
+                return visitor;
+            }
+        }
+        throw new VisitorNotFoundException (name + "is missing from the visitor list");
     }
 
     public void buyTicketVisitor(double price, Date schedule, Visitor visitor, int numberOfTickets) {

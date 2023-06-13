@@ -63,6 +63,7 @@ public class ZooTest {
     }
 
     @Test
+    @DisplayName("Success assigning animal to staff")
     void assignAnimalToStaff() throws AnimalNotFoundException, StaffNotFoundException {
         Staff employee = new Staff("Mark", "Veterinarian");
 
@@ -76,8 +77,16 @@ public class ZooTest {
     }
 
     @Test
+    @DisplayName("Success registering visitors")
     void registerVisitor() {
+        Visitor visitor = new Visitor("Jacob");
 
+        zoo.registerVisitor(visitor);
+
+        Assertions.assertAll("Visitor is created",
+                () -> Assertions.assertEquals(1, zoo.getNumberOfVisitors()),
+                () -> Assertions.assertEquals("Jacob", zoo.getVisitor("Jacob").getName())
+        );
     }
 
     @Test
