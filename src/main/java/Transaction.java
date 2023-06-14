@@ -15,19 +15,15 @@ public class Transaction {
         this.tickets = tickets;
     }
 
+    public int getNumberOfTickets() {
+        return tickets.size();
+    }
+
     public String getDate() {
         return date;
     }
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public Visitor getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Visitor customer) {
-        this.customer = customer;
     }
 }
