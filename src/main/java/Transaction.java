@@ -15,6 +15,10 @@ public class Transaction {
         this.tickets = tickets;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public int getNumberOfTickets() {
         return tickets.size();
     }
@@ -23,7 +27,4 @@ public class Transaction {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
 }

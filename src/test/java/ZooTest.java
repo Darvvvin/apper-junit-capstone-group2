@@ -2,6 +2,7 @@ import org.junit.jupiter.api.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -179,6 +180,7 @@ public class ZooTest {
     }
 
     @Test
+    @DisplayName("Successful creating ticket")
     void createTicket() {
         Date date = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
@@ -197,6 +199,67 @@ public class ZooTest {
     }
 
     @Test
-    void getTransactionsByDate() {
+    @DisplayName("Successful getting transactions by date")
+    void getTransactionsByDate() throws TransactionNotFoundException {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        Date dateYesterday = cal.getTime();
+
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        String schedule = new String(simpleDateFormat.format(date));
+        String scheduleYesterday = new String(simpleDateFormat.format(dateYesterday));
+
+        double price = 100.0;
+        int numTickets = 3;
+        Visitor visitor = new Visitor("Mark");
+        zoo.registerVisitor(visitor);
+
+        Transaction transaction = zoo.buyTicketVisitor(price, schedule, visitor, numTickets);
+        Transaction transactionYesterday = zoo.buyTicketVisitor(price, scheduleYesterday, visitor, numTickets);
+
+        List<Transaction> transactionsToday = zoo.getTransactionsByDate(schedule);
+        List<Transaction> transactionsYesterday = zoo.getTransactionsByDate(scheduleYesterday);
+
+        Assertions.assertAll("Getting Transactions by date",
+                () -> Assertions.assertEquals(1, transactionsToday.size()),
+                () -> Assertions.assertEquals(1, transactionsYesterday.size()),
+                () -> Assertions.assertNotNull(transaction),
+                () -> Assertions.assertNotNull(transactionYesterday),
+                () -> Assertions.assertNotEquals(transactionsToday, transactionsYesterday),
+                () -> Assertions.assertNotNull(zoo.getTransactionFromDate(transaction.getId(), transactionsToday))
+        );
+    }
+    @Test
+    @DisplayName("Fail getting transaction from date")
+    void getTransactionsByDate_TransactionNotFound() throws TransactionNotFoundException {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        Date dateYesterday = cal.getTime();
+
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        String schedule = new String(simpleDateFormat.format(date));
+        String scheduleYesterday = new String(simpleDateFormat.format(dateYesterday));
+
+        double price = 100.0;
+        int numTickets = 3;
+        Visitor visitor = new Visitor("Mark");
+        zoo.registerVisitor(visitor);
+
+        Transaction transaction = zoo.buyTicketVisitor(price, schedule, visitor, numTickets);
+        Transaction transactionYesterday = zoo.buyTicketVisitor(price, scheduleYesterday, visitor, numTickets);
+
+        List<Transaction> transactionsToday = zoo.getTransactionsByDate(schedule);
+        List<Transaction> transactionsYesterday = zoo.getTransactionsByDate(scheduleYesterday);
+
+        Assertions.assertAll("Getting Transactions by date",
+                () -> Assertions.assertEquals(1, transactionsToday.size()),
+                () -> Assertions.assertEquals(1, transactionsYesterday.size()),
+                () -> Assertions.assertNotNull(transaction),
+                () -> Assertions.assertNotNull(transactionYesterday),
+                () -> Assertions.assertNotEquals(transactionsToday, transactionsYesterday),
+                () -> Assertions.assertThrows(TransactionNotFoundException.class, () -> zoo.getTransactionFromDate(transaction.getId(), transactionsYesterday))
+        );
     }
 }
