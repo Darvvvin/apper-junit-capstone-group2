@@ -129,4 +129,13 @@ public class Zoo {
         }
         return filteredTransactions;
     }
+
+    public Transaction getTransactionFromDate(String id, List<Transaction> transactions) throws TransactionNotFoundException {
+        for (Transaction transaction: transactions) {
+            if (transaction.getId().equals(id)) {
+                return transaction;
+            }
+        }
+        throw new TransactionNotFoundException("Transaction is not found");
+    }
 }
