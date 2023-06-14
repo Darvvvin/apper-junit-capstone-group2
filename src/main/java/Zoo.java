@@ -94,16 +94,30 @@ public class Zoo {
         throw new VisitorNotFoundException (name + "is missing from the visitor list");
     }
 
-    public void buyTicketVisitor(double price, String schedule, Visitor visitor, int numberOfTickets) {
+    public Transaction buyTicketVisitor(double price, String schedule, Visitor visitor, int numberOfTickets) {
         List<Ticket> customerTickets = new ArrayList<>();
         for(int i = 0; i < numberOfTickets; i++)
             customerTickets.add(createTicket(price, schedule));
 
-        transactions.add(new Transaction(schedule, visitor, customerTickets));
+        Transaction newTransaction = new Transaction(schedule, visitor, customerTickets);
+        transactions.add(newTransaction);
+        return newTransaction;
     }
 
     public Ticket createTicket(double price, String schedule) {
         return new Ticket(price, schedule);
+    }
+
+    public int retrieveTicketsFromTransaction (Transaction transaction) throws TransactionNotFoundException{
+        if (!transactions.contains(transaction)) {
+            throw new TransactionNotFoundException("Transaction is missing");
+        } else {
+            return transaction.getNumberOfTickets();
+        }
+    }
+
+    public int getNumberOfTransactions() {
+        return transactions.size();
     }
 
     public List<Transaction> getTransactionsByDate(String date) {

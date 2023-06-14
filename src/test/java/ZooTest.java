@@ -1,7 +1,9 @@
 import org.junit.jupiter.api.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ZooTest {
     private Zoo zoo;
@@ -138,13 +140,48 @@ public class ZooTest {
     }
 
     @Test
+    @DisplayName("Successful buying of ticket")
     void buyTicketVisitor() {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        String schedule = new String(simpleDateFormat.format(date));
+        double price = 100.0;
+        int numTickets = 3;
+        Visitor visitor = new Visitor("Mark");
+        zoo.registerVisitor(visitor);
+
+        Transaction transaction = zoo.buyTicketVisitor(price, schedule, visitor, numTickets);
+
+        Assertions.assertAll("Successful buy ticket",
+                () -> Assertions.assertEquals(1, zoo.getNumberOfTransactions()),
+                () -> Assertions.assertEquals(numTickets, zoo.retrieveTicketsFromTransaction(transaction)),
+                () -> Assertions.assertNotNull(transaction)
+        );
+
+    }
+    @Test
+    @DisplayName("Fail buying of ticket")
+    void buyTicketVisitor_TransactionNotFound() {
+        Date date = new Date();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy");
+        String schedule = new String(simpleDateFormat.format(date));
+        double price = 100.0;
+        int numTickets = 3;
+        Visitor visitor = new Visitor("Mark");
+        zoo.registerVisitor(visitor);
+        List<Ticket> tickets = new ArrayList<>();
+        tickets.add(new Ticket(120.0, schedule));
+
+        Transaction transaction = zoo.buyTicketVisitor(price, schedule, visitor, numTickets);
+        Transaction missingTransaction = new Transaction(schedule, visitor, tickets);
+
+        Assertions.assertThrows(TransactionNotFoundException.class, () -> zoo.retrieveTicketsFromTransaction(missingTransaction));
     }
 
     @Test
     void createTicket() {
         Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
 
         double price = 100.0;
 
