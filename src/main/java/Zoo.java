@@ -19,6 +19,7 @@ public class Zoo {
         this.transactions = new ArrayList<>();
     }
 
+    // Animal
     public void addAnimal(Animal animal){
         animals.add(animal);
     }
@@ -35,7 +36,9 @@ public class Zoo {
     public int getNumberOfAnimals() {
         return animals.size();
     }
+    // Animal
 
+    // Staff
     public String registerStaff(Staff staff){
         this.staff.add(staff);
         return staff.getId();
@@ -76,7 +79,9 @@ public class Zoo {
             throw new NoAnimalsAssignedException(animalName + " is not assigned");
         }
     }
+    // Staff
 
+    // Visitors
     public void registerVisitor(Visitor visitor) {
         visitors.add(visitor);
     }
@@ -91,7 +96,7 @@ public class Zoo {
                 return visitor;
             }
         }
-        throw new VisitorNotFoundException (name + "is missing from the visitor list");
+        throw new VisitorNotFoundException (name + " was not found in the visitor list.");
     }
 
     public Transaction buyTicketVisitor(double price, String schedule, Visitor visitor, int numberOfTickets) {
@@ -103,7 +108,9 @@ public class Zoo {
         transactions.add(newTransaction);
         return newTransaction;
     }
+    // Visitors
 
+    // Tickets & Transactions
     public Ticket createTicket(double price, String schedule) {
         return new Ticket(price, schedule);
     }
@@ -138,4 +145,5 @@ public class Zoo {
         }
         throw new TransactionNotFoundException("Transaction is not found");
     }
+    // Tickets & Transactions
 }
